@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "library(shiny)\n# Define server logic required to draw a histogram\n\n\n\nserver <- function(input,output,session){\n  IP <- reactive({ input$getIP })\n  \n  observe({\n    shinyjs::toggleState(\"my_button\", input$characters !=\"\" )\n  })\n  observe({\n    shinyjs::toggleState(\"check\", !input$name ==\"\"  && !input$mail ==\"\")\n  })\n  \n  # output$IPinfor <- DT::renderDataTable({ \n  #   do.call(\"rbind\", IP()) \n  # })\n  \n  observeEvent(input$check, {\n    ## update personal information \n    IPinfor=do.call(\"rbind\", IP())  ## six rows, 1 column.\n    ## ip/city/region/country/loc/org \n    ip=IPinfor[1,1]\n    city_ip=IPinfor[2,1]\n    sql=paste(\"INSERT INTO contacts  (name,age,ip,city_ip,city_user,mail,phone,married,desc) VALUES ( \",\n              paste(shQuote(input$name),  input$age,  shQuote(ip),  shQuote(city_ip),  \n                    shQuote(input$city),  shQuote(input$mail),  shQuote(input$phone), \n                    shQuote(input$married), sep=','),\n              \n              \",'test' )\"\n              )\n    library(RSQLite)\n    sqlite    <- dbDriver(\"SQLite\")\n    con <- dbConnect(sqlite,\"contacts.sqlite\") # makes a new file\n    dbSendQuery(con, sql)\n    dbDisconnect(con)\n  })\n  \n  observeEvent(input$my_button, {\n    ## update personal characters \n    ## UPDATE contacts SET desc='test,test1,test2' WHERE ip='8.8.8.8' and mail = '123@123.com';\n    \n    IPinfor=do.call(\"rbind\", IP())  ## six rows, 1 column.\n    ## ip/city/region/country/loc/org \n    ip=IPinfor[1,1] \n    sql=paste(\" UPDATE contacts SET desc= \", shQuote(paste(input$characters, collapse= ',')) ,\" where ip = \",\n              shQuote(ip),\" and mail = \",shQuote(input$mail)\n    )\n    library(RSQLite)\n    sqlite    <- dbDriver(\"SQLite\")\n    con <- dbConnect(sqlite,\"contacts.sqlite\") # makes a new file\n    dbSendQuery(con, sql)\n    dbDisconnect(con)\n  })\n  \n  \n}\n",
+    "created" : 1503837211639.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4280309170",
+    "id" : "1C819F8B",
+    "lastKnownWriteTime" : 1503839941,
+    "last_content_update" : 1503839941745,
+    "path" : "~/Documents/github_jmzeng1314/where_is_my_Mr_Right/server.R",
+    "project_path" : "server.R",
+    "properties" : {
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

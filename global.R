@@ -1,0 +1,16 @@
+# install packages
+if (!try(require("DT"))) install.packages("DT", repos= "https://cran.rstudio.com/")
+if (!try(require("shinydashboard"))) install.packages("shinydashboard", repos= "https://cran.rstudio.com/")
+if (!try(require("DBI"))) install.packages("DBI", repos= "https://cran.rstudio.com/")
+if (!try(require("RSQLite"))) install.packages("RSQLite", repos= "https://cran.rstudio.com/")
+if (!try(require("RColorBrewer"))) install.packages("RColorBrewer", repos= "https://cran.rstudio.com/")
+
+suppressPackageStartupMessages(library(shiny))
+suppressPackageStartupMessages(library(shinydashboard))
+suppressPackageStartupMessages(library(stringr))
+suppressPackageStartupMessages(library(DT))
+suppressPackageStartupMessages(library(shinyBS))
+suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(shinyAce))
+suppressPackageStartupMessages(library(knitr))
+suppressPackageStartupMessages(library(shinyjs))

@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "library(shiny)\nlibrary(shinydashboard)\ncharacters=read.table('characters.txt',stringsAsFactors = F,encoding = 'UTF-8')\n\n## TODO:\n## statistics page :\n\nheader <- dashboardHeader(title=\"找来找去 随机匹配\")\nsider <- dashboardSidebar(\n  sidebarMenu(\n    menuItem(\"来玩呗\", tabName=\"play\", icon=icon(\"meetup\")),\n    menuItem(\"看看呗\", tabName=\"stat\", icon=icon(\"line-chart\")),\n    menuItem(\"免责\", tabName=\"license\", icon=icon(\"legal\"))\n))\n\n# choices\n# 信息录入界面\n# inputId, \"name\", \"age\", \"city\", \"mail\", \"married\", ,\n# buttion: \"check\", \"my_button\",\"her_button\"\n# outpuId, \"cloud\"\n# 标签云\nchoices <- c(\"多金\", \"高\")\nplay_items <-tabItem(tabName=\"play\",  fluidRow(\n  box(\n    textInput(inputId=\"name\", label = \"尊姓大名\"),\n    sliderInput(inputId=\"age\", label = \"贵庚\", min = 20, max = 40, value = 30),\n    textInput(inputId=\"city\", label=\"身居何处\", placeholder = \"上海\" ),\n    textInput(inputId=\"phone\", label = \"可否给个号码\", placeholder=\"可选\"),\n    textInput(inputId=\"mail\", label = \"邮箱\", placeholder = \"必选\"),\n    checkboxInput(inputId=\"married\", label = \"单身\",value = TRUE),\n    actionButton(inputId=\"check\",label = \"确定\"),\n    solidHeader = TRUE,\n    width = 4\n  ),\n  box(\n    tags$div(align=\"center\",tags$h3(\"你是什么样的一个人\")),\n    #plotOutput(outputId=\"cloud\",height = 300),\n    #textInput(inputId=\"characters\",label=\"用上面的标签描述一下你,以空格分隔\",\n    #      placeholder = \"可爱 迷人\"),\n    selectizeInput('characters', label = \"用上面的标签描述一下你,以空格分隔\",\n                   choices = characters,# width = 275,\n                   multiple=T,\n                   options = list(placeholder = \"可爱 迷人\",\n                                  maxOptions = 1000)\n                   ),\n    actionButton(inputId=\"my_button\",label = \"这就是我\"),\n    DT::dataTableOutput('IPinfor'),\n    width = 5 ,\n    height = 500,\n    background = \"purple\"\n  ),\n  box(\n      width = 3,\n      column( width= 12, \n        tags$h4(\"你希望他/她如何\"),\n        selectInput(inputId=\"choice\", label = \"只能选择一个哦\", choices = choices),\n        actionButton(inputId=\"her_button\",label = \"就这个吧\")\n      )\n    )\n))\n\n\n# 主要内容\nbody <- dashboardBody(\n  shinyjs::useShinyjs(), \n  tags$script(src=\"getIP.js\"),\n  tabItems(\n    play_items,\n    tabItem(tabName=\"stat\"),\n    tabItem(tabName=\"license\")\n  )\n\n)\n\nui <- dashboardPage(\n  header,\n  sider,\n  body,\n  skin = \"purple\"\n)\n\n\n",
+    "created" : 1503760690453.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3421024187",
+    "id" : "2BE0066B",
+    "lastKnownWriteTime" : 1503840029,
+    "last_content_update" : 1503840029137,
+    "path" : "~/Documents/github_jmzeng1314/where_is_my_Mr_Right/ui.R",
+    "project_path" : "ui.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
